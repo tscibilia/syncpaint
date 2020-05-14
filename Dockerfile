@@ -8,13 +8,15 @@ RUN \
  apt-get install -y \
 	git \
 	nodejs \
-    build-essential \
-    npm && \
+	build-essential \
+	npm && \
  echo "**** install syncpaint ****" && \
  mkdir -p \
 	/opt/syncpaint && \
  git clone https://github.com/pkrasicki/SyncPaint.git /opt/syncpaint && \
  cd /opt/syncpaint && \
+ npm install && \
+ npm run build && \
  node app.js && \
  echo "**** clean up ****" && \
  rm -rf \
