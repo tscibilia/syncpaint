@@ -4,7 +4,7 @@ LABEL description="A web app for synchronized group drawing"
 
 RUN \
  apk update && apk upgrade && \
- apk add --no-cache bash git -y && \
+ apk add --no-cache bash git && \
  mkdir -p /app && \
  git clone https://github.com/pkrasicki/SyncPaint.git /app && \
  cd /app && \
