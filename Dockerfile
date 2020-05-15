@@ -10,7 +10,7 @@ RUN \
  cd /app && \
  npm install && \
  npm run build-prod && \
- npm prune --production && \
+ npm prune --production
 
 # add local files
 COPY . /app
