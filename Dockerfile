@@ -1,23 +1,18 @@
-FROM lsiobase/ubuntu:bionic
+FROM node:lts-alpine3.11
 
-LABEL maintainer.name="Thomas Scibilia"
 LABEL description="A web app for synchronized group drawing"
 
 RUN \
- apt-get update && \
- apt-get install -y \
-	git \
-	nodejs \
-	build-essential \
-	npm && \
+ apk update && apk upgrade && \
+ apk add --no-cache bash git -y \
  echo "**** install syncpaint ****" && \
  mkdir -p \
-	/opt/syncpaint && \
- git clone https://github.com/pkrasicki/SyncPaint.git /opt/syncpaint && \
- cd /opt/syncpaint && \
+	/app && \
+ git clone https://github.com/pkrasicki/SyncPaint.git /app && \
+ cd /app && \
  npm install && \
- npm run build && \
- node app.js && \
+ npm run build-prod && \
+ npm prune --production && \
  echo "**** clean up ****" && \
  rm -rf \
 	/tmp/* \
@@ -27,5 +22,9 @@ RUN \
 # add local files
 COPY /root /
 
+WORKDIR /app
+
 # ports and volumes
 EXPOSE 3000
+
+ENTRYPOINT ["node", "app.js"]
